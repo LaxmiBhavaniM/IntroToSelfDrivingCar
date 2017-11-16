@@ -17,7 +17,20 @@ def identity(n):
         for i in range(n):
             I.g[i][i] = 1.0
         return I
+def dot_product(vector_one, vector_two):
+    """
+        Calculates the dot product of two vectors.
+    """
+    if len(vector_one) != len(vector_two):
+            raise(ValueError, "Cannot calculate dot-product of two vectors with different sizes.")
 
+    dotProduct = 0
+    for i in range(len(vector_one)):
+        dotProduct += vector_one[i]*vector_two[i]
+    
+    return dotProduct
+    
+    
 class Matrix(object):
 
     # Constructor
@@ -75,6 +88,31 @@ class Matrix(object):
             raise(NotImplementedError, "inversion not implemented for matrices larger than 2x2.")
 
         # TODO - your code here
+        inverseOfMatrix = zeroes(self.h, self.w)
+        
+        ###  formula:   A_inverse = (1/detA)*[trA*I-A]
+        
+        # if it is a 1x1 matrix
+        if(self.h==1 and self.w==1):
+            inverseOfMatrix.g[0][0] = 1.0/self.g[0][0]
+           
+        # if it is a 2x2 matrix
+        else:
+            ## find detA, trA and I
+            determinantOfMatrix = self.determinant()
+            traceOfMatrix = self.trace()
+            identityMatrix = identity(self.h)
+            
+            # calculate trA*I
+            traceOfMatrix_I = traceOfMatrix * identityMatrix
+            
+            # calculate trA*I-A
+            diffMatrix = traceOfMatrix_I - self
+            
+            # calculate (1/detA)*[trA*I-A]
+            inverseOfMatrix = (1.0/determinantOfMatrix)*diffMatrix
+        
+        return inverseOfMatrix
 
     def T(self):
         """
