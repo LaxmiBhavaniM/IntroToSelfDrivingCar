@@ -119,6 +119,12 @@ class Matrix(object):
         Returns a transposed copy of this Matrix.
         """
         # TODO - your code here
+        matrix_transpose = zeroes(self.w,self.h)
+        for r in range(self.h):
+            for c in range(self.w):
+                matrix_transpose.g[c][r] = self.g[r][c]
+    
+        return matrix_transpose
 
     def is_square(self):
         return self.h == self.w
