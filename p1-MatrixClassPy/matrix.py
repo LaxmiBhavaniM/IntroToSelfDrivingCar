@@ -167,7 +167,13 @@ class Matrix(object):
         #   
         # TODO - your code here
         #
-
+        sumOfMatrices = zeroes(self.h, self.w)
+        for r in range(self.h):
+            for c in range(self.w):
+                sumOfMatrices.g[r][c] = self.g[r][c]+other.g[r][c]
+        
+        return sumOfMatrices
+    
     def __neg__(self):
         """
         Defines the behavior of - operator (NOT subtraction)
@@ -183,6 +189,12 @@ class Matrix(object):
         #   
         # TODO - your code here
         #
+        negOfMatrix = zeroes(self.h, self.w)
+        for r in range(self.h):
+            for c in range(self.w):
+                negOfMatrix.g[r][c] = -self.g[r][c]
+        
+        return negOfMatrix
 
     def __sub__(self, other):
         """
@@ -191,6 +203,15 @@ class Matrix(object):
         #   
         # TODO - your code here
         #
+        if self.h != other.h or self.w != other.w:
+            raise(ValueError, "Matrices can only be subtracted if the dimensions are the same")
+        
+        diffOfMatrices = zeroes(self.h, self.w)
+        for r in range(self.h):
+            for c in range(self.w):
+                diffOfMatrices.g[r][c] = self.g[r][c]-other.g[r][c]
+        
+        return diffOfMatrices
 
     def __mul__(self, other):
         """
@@ -199,6 +220,19 @@ class Matrix(object):
         #   
         # TODO - your code here
         #
+        if self.w != other.h:
+            raise(ValueError, "Cannot multiply the two matrices. Number of columns in "+self+" must be equal to the number of rows in "+other)
+        
+        product = zeroes(self.h, other.w)
+        transpose_other = other.T()
+    
+        for r1 in range(self.h):
+            row=[]
+            for r2 in range(transpose_other.h):
+                row.append(dot_product(self.g[r1],transpose_other.g[r2]))
+            product.g[r1] = row
+        
+        return product
 
     def __rmul__(self, other):
         """
@@ -213,8 +247,11 @@ class Matrix(object):
           0.0  2.0
         """
         if isinstance(other, numbers.Number):
-            pass
             #   
             # TODO - your code here
             #
-            
+            product = zeroes(self.h, self.w)
+            for r in range(self.h):
+                for c in range(self.w):
+                    product.g[r][c] = self.g[r][c]*other
+            return product
