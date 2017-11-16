@@ -40,6 +40,14 @@ class Matrix(object):
             raise(NotImplementedError, "Calculating determinant not implemented for matrices largerer than 2x2.")
         
         # TODO - your code here
+        a = self.g[0][0]
+        b = self.g[0][1]
+        c = self.g[1][0]
+        d = self.g[1][1]
+        
+        determinantOfMatrix = a*d-b*c
+        
+        return determinantOfMatrix
 
     def trace(self):
         """
