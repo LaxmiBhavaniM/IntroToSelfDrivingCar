@@ -57,6 +57,13 @@ class Matrix(object):
             raise(ValueError, "Cannot calculate the trace of a non-square matrix.")
 
         # TODO - your code here
+        traceOfMatrix = 0
+        for r in range(self.h):
+            for c in range(self.w):
+                flag = (r==c)
+                traceOfMatrix += self.g[r][c]*flag
+        
+        return traceOfMatrix
 
     def inverse(self):
         """
